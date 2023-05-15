@@ -1,6 +1,6 @@
 ---
 - name: Install and configure nginx, php and database
-  hosts: ubuntuserver
+  hosts: 192.168.20.127
   become: true
 
   tasks:
@@ -53,7 +53,7 @@
 
     - name: Copy Nginx sites-enabled file
       copy:
-        src: //to/default
+        src: /home/ansible/ansible-playground/default
         dest: /etc/nginx/sites-enabled/default
         owner: root
         group: root
@@ -63,7 +63,7 @@
     
     - name: Copy Nginx sites-available file
       copy:
-        src: ///default
+        src: /home/ansible/ansible-playground/default
         dest: /etc/nginx/sites-available/default
         owner: root
         group: root
@@ -73,7 +73,7 @@
 
     - name: Copy web files to /var/www/html
       copy:
-        src: /path/to/web_files
+        src: /home/ansible/ansible-playground/wave_cafe
         dest: /var/www/html
         owner: root
         group: root
@@ -84,4 +84,3 @@
       service:
         name: nginx
         state: restarted
-
