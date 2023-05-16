@@ -1,86 +1,100 @@
----
-- name: Install and configure nginx, php and database
-  hosts: 192.168.20.127
+- name: Install and configure web server
+  hosts: webservers
   become: true
 
+  vars:
+    web_server:
+      - name: Apache
+        package: httpd
+        service: httpd
+        config_template: apache.conf
+
+      - name: Nginx
+        package: nginx
+        service: nginx
+        config_template: nginx.conf
+
+    data_base:
+      - name: MySql
+        package: mysql-service
+      
+      - name: MariaDB
+        package: mariadb
+
+    php_packages:
+      - php
+      - php-mysql
+
   tasks:
-    - name: Installing Nginx
-      apt:
-        name: nginx
+    - name: Install PHP packages
+      package:
+        name: "{{ php_packages }}"
         state: present
+      when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'CentOS'
 
-    - name: Installation install software-properties-common
-      apt: name=software-properties-common
-
-    - name: "Repo PHP 7.4"
-      apt_repository:
-        repo="ppa:ondrej/php"
-   
-    - name: "Updating the repo"
-      apt: update_cache=yes
-
-    - name: Installation PHP 7.4
-      apt: name=php7.4 state=present
-
-    - name: install lamp stack
-      apt:
-        pkg:
-          - php7.4-mysql
-          - php7.4-curl
-          - php7.4-json
-          - php7.4-cgi
-          - php7.4-xsl
-          - php7.4-cgi
-          - php7.4-gd
-          - php7.4-mbstring
-          - php7.4-zip
-          - php7.4-xmlrpc
-          - php7.4-soap
-          - php7.4-intl
-          - libapache2-mod-php
+    - name: Install web server
+      package:
+        name: "{{ item.package }}"
         state: present
-        update_cache: yes
+      with_items: "{{ web_server }}"
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: Install web server
+      package:
+        name: "{{ item.package }}"
+        state: present
+      with_items: "{{ web_server }}"
+      when: ansible_distribution == 'CentOS'
 
     - name: Install MySQL
-      apt:
-        name: mysql-server
+      package:
+        name: "{{ item.package }}"
         state: present
+      with_items: "{{ data_base }}"
+      when: ansible_distribution == 'Ubuntu'
 
-    - name: Allow incoming connections on port 80
+    - name: Install MySQL
+      package:
+        name: "{{ item.package }}"
+        state: present
+      with_items: "{{ data_base }}"
+      when: ansible_distribution == 'CentOS'
+
+    - name: Configure web server
+      template:
+        src: "{{ item.config_template }}"
+        dest: "/etc/{{ item.package }}/{{ item.config_template }}"
+        owner: root
+        group: root
+        mode: "0644"
+      with_items: "{{ web_server }}"
+      when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'CentOS'
+
+    - name: Start web server service
+      service:
+        name: "{{ item.service }}"
+        state: started
+        enabled: yes
+      with_items: "{{ web_server }}"
+      when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'CentOS'
+
+    - name: Allow traffic on port 80 ubuntu
       ufw:
         rule: allow
         port: 80
+      when: ansible_distribution == 'Ubuntu'
 
-    - name: Copy Nginx sites-enabled file
-      copy:
-        src: /home/ansible/ansible-playground/default
-        dest: /etc/nginx/sites-enabled/default
-        owner: root
-        group: root
-        mode: "0644"
-      notify:
-        - Restart Nginx
-    
-    - name: Copy Nginx sites-available file
-      copy:
-        src: /home/ansible/ansible-playground/default
-        dest: /etc/nginx/sites-available/default
-        owner: root
-        group: root
-        mode: "0644"
-      notify:
-        - Restart Nginx
-
-    - name: Copy web files to /var/www/html
-      copy:
-        src: /home/ansible/ansible-playground/wave_cafe
-        dest: /var/www/html
-        owner: root
-        group: root
-        mode: "0755"
+    - name: Allow traffic on port 80 centos
+      firewalld:
+        port: 80/tcp
+        permanent: yes
+        state: enabled
+      when: ansible_distribution == 'CentOS'
 
   handlers:
-    - name: Restart Nginx
+    - name: Restart web server
       service:
-        name: nginx
+        name: "{{ item.service }}"
         state: restarted
+      with_items: "{{ web_server }}"
+      when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'CentOS'
