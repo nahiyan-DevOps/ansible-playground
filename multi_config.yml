@@ -4,11 +4,17 @@
   become: true
 
   tasks:
+    - name: Install epel-release
+      yum:
+        name: epel-release
+        state: present
+      when: ansible_os_family == "CentOS"
+
     - name: Install PHP on CentOS
       yum:
         name: php
         state: present
-      when: ansible_os_family == "Redhat"
+      when: ansible_os_family == "CentOS"
 
     - name: Installation install software-properties-common
       apt: name=software-properties-common
@@ -46,3 +52,5 @@
         state: present
         update_cache: yes
       when: ansible_os_family == "Debian"
+
+    
