@@ -1,0 +1,124 @@
+---
+- name: Install and configure nginx, php and database on Centos and Ubuntu
+  hosts: webservers
+  become: true
+
+  vars:
+    php_package:
+      - php
+      - php-mysql
+      - php-fpm
+    mysql_package:
+      - mysql-server
+      - mysql-client
+    mariadb_package:
+      - mariadb-server
+    nginx_package:
+      - nginx
+    file_path_centos: /usr/share/nginx/html
+    file_path_ubuntu: /var/www/html
+    nginx_conf_centos: /etc/nginx/nginx.conf
+    nginx_conf_ubuntu: /etc/nginx/sites-enabled/default
+    http_port: 80
+
+  tasks:
+    - name: Install epel-release
+      yum:
+        name: epel-release
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: Install PHP on CentOS and Ubuntu
+      yum:
+        name: "{{ php_package }}"
+        state: present
+      when: ansible_os_family == "RedHat" or ansible_os_family == "Debian"
+
+    - name: Install MariaDB
+      yum:
+        name: "{{ mariadb_package }}"
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: Install MySQL
+      apt:
+        name: "{{ mysql_package }}"
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Install Nginx
+      package:
+        name: "{{ nginx_package }}"
+        state: present
+      when: ansible_os_family == 'Debian' or ansible_os_family == 'RedHat'
+
+    - name: Allow incoming connections on port 80 CentOS
+      firewalld:
+        port: "{{ http_port }}"/tcp
+        permanent: yes
+        state: enabled
+        immediate: yes
+      when: ansible_os_family == 'RedHat'
+
+    - name: Allow incoming connections on port 80 Ubuntu
+      ufw:
+        rule: allow
+        port: "{{ http_port }}"
+      when: ansible_os_family == 'Debian'
+
+    - name: Copy Nginx config file CentOS
+      template:
+        src: /home/ansible/ansible-playground/centos_nginx.conf
+        dest: "{{ nginx_conf_centos }}"
+        owner: root
+        group: root
+        mode: "0644"
+      notify:
+        - Restart Nginx
+      when: ansible_os_family == 'RedHat'
+
+    - name: Copy Nginx sites-enabled file Ubuntu
+      template:
+        src: /home/ansible/ansible-playground/default
+        dest: "{{ nginx_conf_ubuntu }}"
+        owner: root
+        group: root
+        mode: "0644"
+      notify:
+        - Restart Nginx
+      when: ansible_os_family == 'Debian'
+    
+    - name: Copy Nginx sites-available file
+      template:
+        src: /home/ansible/ansible-playground/default
+        dest: /etc/nginx/sites-available/default
+        owner: root
+        group: root
+        mode: "0644"
+      notify:
+        - Restart Nginx
+      when: ansible_os_family == 'Debian'
+
+    - name: Copy web files to /usr/share/nginx/html
+      copy:
+        src: /home/ansible/ansible-playground/wave_cafe
+        dest: "{{ file_path_centos }}"
+        owner: root
+        group: root
+        mode: "0755"
+      when: ansible_os_family == 'RedHat'
+
+    - name: Copy web files to /var/www/html
+      copy:
+        src: /home/ansible/ansible-playground/wave_cafe
+        dest: "{{ file_path_ubuntu }}"
+        owner: root
+        group: root
+        mode: "0755"
+      when: ansible_os_family == 'Debian'
+    
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted
