@@ -52,3 +52,21 @@
         state: present
         update_cache: yes
       when: ansible_os_family == "Debian"
+
+    - name: Install MariaDB
+      yum:
+        name: mariadb-server
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: Install MySQL
+      apt:
+        name: mysql-server
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Install Nginx
+      package:
+        name: nginx
+        state: present
+      when: ansible_os_family == 'Debian' or ansible_os_family == 'RedHat'
