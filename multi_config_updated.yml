@@ -54,7 +54,7 @@
 
     - name: Allow incoming connections on port 80 CentOS
       firewalld:
-        port: "{{ http_port }}"/tcp
+        port: 80/tcp
         permanent: yes
         state: enabled
         immediate: yes
