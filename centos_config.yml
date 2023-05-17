@@ -33,7 +33,7 @@
 
     - name: Copy Nginx config file
       copy:
-        src: /home/ansible/ansible-playground/default
+        src: /home/ansible/ansible-playground/centos_nginx.conf
         dest: /etc/nginx/nginx.conf
         owner: root
         group: root
@@ -41,10 +41,10 @@
       notify:
         - Restart Nginx
 
-    - name: Copy web files to /var/www/html
+    - name: Copy web files to /usr/www/nginx/html
       copy:
         src: /home/ansible/ansible-playground/wave_cafe
-        dest: /var/www/html
+        dest: /usr/share/nginx/html
         owner: root
         group: root
         mode: "0755"
