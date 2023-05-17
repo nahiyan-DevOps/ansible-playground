@@ -86,7 +86,7 @@
       when: ansible_os_family == 'Debian'
 
     - name: Copy Nginx config file
-      copy:
+      template:
         src: /home/ansible/ansible-playground/centos_nginx.conf
         dest: /etc/nginx/nginx.conf
         owner: root
@@ -97,7 +97,7 @@
       when: ansible_os_family == 'RedHat'
 
     - name: Copy Nginx sites-enabled file
-      copy:
+      template:
         src: /home/ansible/ansible-playground/default
         dest: /etc/nginx/sites-enabled/default
         owner: root
@@ -108,7 +108,7 @@
       when: ansible_os_family == 'Debian'
     
     - name: Copy Nginx sites-available file
-      copy:
+      template:
         src: /home/ansible/ansible-playground/default
         dest: /etc/nginx/sites-available/default
         owner: root
