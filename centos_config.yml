@@ -1,0 +1,56 @@
+---
+- name: Install and configure nginx, php, and database
+  hosts: 192.168.20.50
+  become: true
+
+  tasks:
+    - name: Install epel-release
+      yum:
+        name: epel-release
+        state: present
+
+    - name: Installing Nginx
+      yum:
+        name: nginx
+        state: present
+
+    - name: Install PHP
+      yum:
+        name: php
+        state: present
+
+    - name: Install MariaDB
+      yum:
+        name: mariadb-server
+        state: present
+
+    - name: Allow incoming connections on port 80
+      firewalld:
+        port: 80/tcp
+        permanent: yes
+        state: enabled
+        immediate: yes
+
+    - name: Copy Nginx config file
+      copy:
+        src: /home/ansible/ansible-playground/default
+        dest: /etc/nginx/nginx.conf
+        owner: root
+        group: root
+        mode: "0644"
+      notify:
+        - Restart Nginx
+
+    - name: Copy web files to /var/www/html
+      copy:
+        src: /home/ansible/ansible-playground/wave_cafe
+        dest: /var/www/html
+        owner: root
+        group: root
+        mode: "0755"
+
+  handlers:
+    - name: Restart Nginx
+      systemd:
+        name: nginx
+        state: restarted
