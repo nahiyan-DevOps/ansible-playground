@@ -70,3 +70,19 @@
         name: nginx
         state: present
       when: ansible_os_family == 'Debian' or ansible_os_family == 'RedHat'
+
+    - name: Allow incoming connections on port 80
+      firewalld:
+        port: 80/tcp
+        permanent: yes
+        state: enabled
+        immediate: yes
+      when: ansible_os_family == 'RedHat'
+
+    - name: Allow incoming connections on port 80
+      ufw:
+        rule: allow
+        port: 80
+      when: ansible_os_family == 'Debian'
+
+    
