@@ -8,13 +8,13 @@
       yum:
         name: epel-release
         state: present
-      when: ansible_os_family == "CentOS"
+      when: ansible_os_family == "RedHat"
 
     - name: Install PHP on CentOS
       yum:
         name: php
         state: present
-      when: ansible_os_family == "CentOS"
+      when: ansible_os_family == "RedHat"
 
     - name: Installation install software-properties-common
       apt: name=software-properties-common
@@ -52,5 +52,3 @@
         state: present
         update_cache: yes
       when: ansible_os_family == "Debian"
-
-    
