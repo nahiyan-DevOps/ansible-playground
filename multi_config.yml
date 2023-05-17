@@ -1,0 +1,48 @@
+---
+- name: Install and configure nginx, php and database on Centos and Ubuntu
+  hosts: webservers
+  become: true
+
+  tasks:
+    - name: Install PHP on CentOS
+      yum:
+        name: php
+        state: present
+      when: ansible_os_family == "Redhat"
+
+    - name: Installation install software-properties-common
+      apt: name=software-properties-common
+      when: ansible_os_family == "Debian"
+
+    - name: "Repo PHP 7.4"
+      apt_repository:
+        repo="ppa:ondrej/php"
+      when: ansible_os_family == "Debian"
+
+    - name: "Updating the repo"
+      apt: update_cache=yes
+      when: ansible_os_family == "Debian"
+
+    - name: Installation PHP 7.4
+      apt: name=php7.4 state=present
+      when: ansible_os_family == "Debian"
+
+    - name: install lamp stack
+      apt:
+        pkg:
+          - php7.4-mysql
+          - php7.4-curl
+          - php7.4-json
+          - php7.4-cgi
+          - php7.4-xsl
+          - php7.4-cgi
+          - php7.4-gd
+          - php7.4-mbstring
+          - php7.4-zip
+          - php7.4-xmlrpc
+          - php7.4-soap
+          - php7.4-intl
+          - libapache2-mod-php
+        state: present
+        update_cache: yes
+      when: ansible_os_family == "Debian"
