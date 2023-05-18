@@ -1,2 +1,3 @@
 ---
 # vars file for application
+file_path_centos: /usr/share/nginx/html

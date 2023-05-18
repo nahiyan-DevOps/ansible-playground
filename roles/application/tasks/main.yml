@@ -1,2 +1,12 @@
 ---
 # tasks file for application
+    - name: Copy web files to /usr/share/nginx/html
+      copy:
+        src: /home/ansible/ansible-playground/wave_cafe
+        dest: "{{ file_path_centos }}"
+        owner: root
+        group: root
+        mode: "0755"
+      when: ansible_os_family == 'RedHat'
+
+    

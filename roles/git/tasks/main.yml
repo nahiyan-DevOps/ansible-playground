@@ -4,3 +4,16 @@
       package:
         name: git
         state: present
+    when: ansible_os_family == 'Debian' or ansible_os_family == 'RedHat'
+
+    - name: Clone git repository
+      git:
+        repo: "{{ programming_planet }}"
+        dest: "{{ file_path_ubuntu }}"
+    when: ansible_os_family == 'Debian'
+
+    - name: Clone git repository
+      git:
+        repo: "{{ wave_cafe }}"
+        dest: "{{ file_path_centos }}"
+    when: ansible_os_family == 'RedHat'
