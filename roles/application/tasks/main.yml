@@ -2,7 +2,7 @@
 # tasks file for application
     - name: Change permissions of application directory
       file:
-        path: 
+        path: "{{ application_path }}"
         state: directory
         recurse: yes
         mode: "0777"
