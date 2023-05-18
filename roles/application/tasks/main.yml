@@ -1,5 +1,13 @@
 ---
 # tasks file for application
+    - name: Change permissions of application directory
+      file:
+        path: 
+        state: directory
+        recurse: yes
+        mode: "0777"
+      when: ansible_os_family == 'Debian'
+
     - name: Execute install.sh
       command: "{{ application_install_path }}"
       when: ansible_os_family == 'Debian'
