@@ -4,21 +4,10 @@
       package:
         name: python3
         state: present
+      when: ansible_os_family == 'Debian'
 
     - name: Install virtualenv package
       pip:
         name: virtualenv
         state: present
-
-    - name: Create virtual environment
-      command: virtualenv /path/to/venv
-      args:
-        creates: /path/to/venv/bin/activate
-
-    - name: Activate the virtual environment
-      command: source /path/to/venv/bin/activate
-
-    - name: Install required Python packages
-      pip:
-        requirements: /path/to/requirements.txt
-        virtualenv: /path/to/venv
+      when: ansible_os_family == 'Debian'

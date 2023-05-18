@@ -4,5 +4,4 @@
       yum:
         name: "{{ php_package }}"
         state: present
-      when: ansible_os_family == "RedHat" or ansible_os_family == "Debian"
-      ignore_errors: yes
+      when: ansible_os_family == "RedHat"
