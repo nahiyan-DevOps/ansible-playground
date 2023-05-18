@@ -2,5 +2,5 @@
 # vars file for git
 programming_planet: https://github.com/nahiyan-DevOps/programming_planet.git
 wave_cafe: https://github.com/nahiyan-DevOps/wave_cafe.git 
-file_path_centos: /usr/share/nginx/html
-file_path_ubuntu: /var
+file_path_centos: /usr/share/nginx/html/wave_cafe
+file_path_ubuntu: /var/programming_planet
