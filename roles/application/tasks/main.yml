@@ -1,9 +1,9 @@
 ---
 # tasks file for application
     - name: Execute install.sh
-      command: {{ application_path }}/shell_files/install.sh
+      command: {{ application_install_path }}
       when: ansible_os_family == 'Debian'
 
     - name: Execute run.sh
-      command: {{ application_path }}/shell_files/run.sh
+      command: {{ application_run_path }}
       when: ansible_os_family == 'Debian'
