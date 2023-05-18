@@ -8,7 +8,7 @@
 
     - name: Copy Nginx config file CentOS
       template:
-        src: /home/ansible/ansible-playground/centos_nginx.conf
+        src: centos_nginx.conf.j2
         dest: "{{ nginx_conf_centos }}"
         owner: root
         group: root
@@ -19,7 +19,7 @@
 
     - name: Copy Nginx sites-enabled file Ubuntu
       template:
-        src: /home/ansible/ansible-playground/default
+        src: default.j2
         dest: "{{ nginx_conf_ubuntu }}"
         owner: root
         group: root
@@ -30,7 +30,7 @@
     
     - name: Copy Nginx sites-available file
       template:
-        src: /home/ansible/ansible-playground/default
+        src: default.j2
         dest: /etc/nginx/sites-available/default
         owner: root
         group: root
