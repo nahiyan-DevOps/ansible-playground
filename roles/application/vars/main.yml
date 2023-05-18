@@ -1,5 +1,6 @@
 ---
 # vars file for application
 application_path: /home/ansible/programming_planet
+application_venv_path: /home/ansible/programming_planet/venv
 application_install_path: /home/ansible/programming_planet/shell_files/install.sh
 application_run_path: /home/ansible/programming_planet/shell_files/run.sh

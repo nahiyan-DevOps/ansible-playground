@@ -8,10 +8,26 @@
         mode: "0777"
       when: ansible_os_family == 'Debian'
 
-    - name: Execute install.sh
-      command: "{{ application_install_path }}"
-      when: ansible_os_family == 'Debian'
+    - name: Create virtual environment
+      command: virtualenv "{{ application_venv_path}}"
+      args:
+        creates: /home/ansible/programming_planet/venv/bin/activate
 
-    - name: Execute run.sh
-      command: "{{ application_run_path }}"
-      when: ansible_os_family == 'Debian'
+    - name: Activate the virtual environment
+      command: source /home/ansible/programming_planet/venv/bin/activate
+
+    - name: Install required Python packages
+      pip:
+        requirements: /home/ansible/programming_planet/requirements.txt
+        virtualenv: "{{ application_venv_path}}"
+
+    - name: Run the Streamlit application
+      command: streamlit run /home/ansible/programming_planet/app.py
+
+    # - name: Execute install.sh
+    #   command: "{{ application_install_path }}"
+    #   when: ansible_os_family == 'Debian'
+
+    # - name: Execute run.sh
+    #   command: "{{ application_run_path }}"
+    #   when: ansible_os_family == 'Debian'
