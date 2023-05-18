@@ -32,7 +32,7 @@ http {
     #gzip  on;
 
     server {
-        listen       80;
+        listen       {{ http_port }};
         server_name  localhost;
 
         #charset koi8-r;
