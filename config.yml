@@ -1,0 +1,10 @@
+---
+- name: Install and configure nginx, php, python and database on Centos and Ubuntu
+  hosts: webservers
+  become: true
+
+  roles:
+    - git
+    - nginx
+    - php
+    - database

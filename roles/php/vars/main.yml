@@ -1,0 +1,8 @@
+---
+# vars file for php
+    php_package:
+      - php
+      - php-mysql
+      - asda
+      - fgdgqa
+      - php-fpm

@@ -1,0 +1,7 @@
+---
+# vars file for database
+    mysql_package:
+      - mysql-server
+      - mysql-client
+    mariadb_package:
+      - mariadb-server

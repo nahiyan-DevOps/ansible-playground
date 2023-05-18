@@ -1,0 +1,9 @@
+---
+# vars file for nginx
+    nginx_package:
+      - nginx
+    file_path_centos: /usr/share/nginx/html
+    file_path_ubuntu: /var/www/html
+    nginx_conf_centos: /etc/nginx/nginx.conf
+    nginx_conf_ubuntu: /etc/nginx/sites-enabled/default
+    http_port: 80
