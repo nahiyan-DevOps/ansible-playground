@@ -2,7 +2,7 @@
 # tasks file for python
     - name: Install Python and pip
       package:
-        name: python3
+        name: python3-pip
         state: present
       when: ansible_os_family == 'Debian'
 
