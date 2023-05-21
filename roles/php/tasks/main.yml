@@ -1,7 +1,0 @@
----
-# tasks file for php
-    - name: Install PHP on CentOS and Ubuntu
-      yum:
-        name: "{{ php_package }}"
-        state: present
-      when: ansible_os_family == "RedHat"
