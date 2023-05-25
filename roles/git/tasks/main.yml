@@ -10,4 +10,5 @@
       git:
         repo: "{{ programming_planet }}"
         dest: "{{ file_path_ubuntu }}"
+        force: yes
       when: ansible_os_family == 'Debian'
