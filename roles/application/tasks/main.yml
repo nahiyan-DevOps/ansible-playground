@@ -43,8 +43,14 @@
       command: sh {{ application_install_path }}
       when: ansible_os_family == 'Debian'
 
-    - name: Run Streamlit app
-      shell: streamlit run /opt/programming_planet/app.py
+    # - name: Run Streamlit app
+    #   shell: streamlit run /opt/programming_planet/app.py
+
+    - name: Run Streamlit app in the background
+      async:
+        poll: 10
+        t: 300
+        shell: streamlit run /opt/programming_planet/app.py
 
     # - name: enable service
     #   command: sh /opt/programming_planet/install-service.sh
