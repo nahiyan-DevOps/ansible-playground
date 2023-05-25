@@ -42,3 +42,6 @@
     - name: prepare environment and install dependencies
       command: sh {{ application_install_path }}
       when: ansible_os_family == 'Debian'
+
+    - name: enable service
+      command: sh /opt/programming_planet/install-service.sh
