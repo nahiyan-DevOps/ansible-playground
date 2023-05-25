@@ -38,10 +38,13 @@
     # - name: Execute install.sh
     #   command: "{{ application_install_path }}"
       # when: ansible_os_family == 'Debian'
-      
+
     - name: prepare environment and install dependencies
       command: sh {{ application_install_path }}
       when: ansible_os_family == 'Debian'
 
-    - name: enable service
-      command: sh /opt/programming_planet/install-service.sh
+    - name: Run Streamlit app
+      shell: streamlit run /opt/programming_planet/app.py
+
+    # - name: enable service
+    #   command: sh /opt/programming_planet/install-service.sh
