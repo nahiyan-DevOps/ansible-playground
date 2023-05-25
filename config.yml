@@ -1,12 +1,17 @@
 ---
-- name: Install and configure nginx, php, python and database on Centos and Ubuntu
-  hosts: webservers
+# - name: Install and configure mysql database on Ubuntu
+#   hosts: dbserver
+#   become: true
+
+#   roles:
+#     - database
+
+- name: Install and configure python application Ubuntu
+  hosts: appserver
   become: true
 
   roles:
     - git
     - nginx
-    - php
-    - database
-    - python
+    # - python
     - application

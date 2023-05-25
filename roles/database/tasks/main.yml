@@ -1,13 +1,7 @@
 ---
 # tasks file for database
-    - name: Install MariaDB
-      yum:
-        name: "{{ mariadb_package }}"
-        state: present
-      when: ansible_os_family == "RedHat"
-
     - name: Install MySQL
       apt:
         name: "{{ mysql_package }}"
         state: present
-      when: ansible_os_family == "Debian"
+      # when: ansible_os_family == "Debian"

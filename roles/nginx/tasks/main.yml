@@ -4,18 +4,7 @@
       package:
         name: "{{ nginx_package }}"
         state: present
-      when: ansible_os_family == 'Debian' or ansible_os_family == 'RedHat'
-
-    - name: Copy Nginx config file CentOS
-      template:
-        src: centos_nginx.conf.j2
-        dest: "{{ nginx_conf_centos }}"
-        owner: root
-        group: root
-        mode: "0644"
-      notify:
-        - Restart Nginx
-      when: ansible_os_family == 'RedHat'
+      when: ansible_os_family == 'Debian'
 
     - name: Copy Nginx sites-enabled file Ubuntu
       template:
@@ -42,7 +31,7 @@
     - name: Copy Nginx config file
       template:
         src: nginx.conf.j2
-        dest: /etc/nginx/nginx.conf
+        dest: /etc/nginx/conf.d/app.conf
         owner: root
         group: root
         mode: "0644"
