@@ -38,7 +38,7 @@
     # - name: Execute install.sh
     #   command: "{{ application_install_path }}"
       # when: ansible_os_family == 'Debian'
-
+      
     - name: prepare environment and install dependencies
       command: sh {{ application_install_path }}
       when: ansible_os_family == 'Debian'
