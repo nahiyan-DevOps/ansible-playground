@@ -9,7 +9,7 @@
 - name: prepare environment and install dependencies
   command: sh {{ application_install_path }}
   when: ansible_os_family == 'Debian'
-- name: Run Streamlit app in the background
+- name: run streamlit app
   async: null
   poll: 10
   t: 300
