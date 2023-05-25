@@ -48,9 +48,9 @@
 
     - name: Run Streamlit app in the background
       async:
-        poll: 10
-        t: 300
-        shell: streamlit run /opt/programming_planet/app.py
+      poll: 10
+      t: 300
+      shell: streamlit run /opt/programming_planet/app.py
 
     # - name: enable service
     #   command: sh /opt/programming_planet/install-service.sh
