@@ -1,4 +1,4 @@
 ---
 # vars file for application
 application_path: /opt/programming_planet
-application_install_path: /opt/programming_planet/shell_files/install.sh
+application_install_path: /opt/programming_planet/install.sh
