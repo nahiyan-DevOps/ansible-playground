@@ -40,5 +40,5 @@
       # when: ansible_os_family == 'Debian'
 
     - name: Execute run.sh
-      command: "{{ application_run_path }}"
+      command: sh {{ application_run_path }}
       # when: ansible_os_family == 'Debian'
