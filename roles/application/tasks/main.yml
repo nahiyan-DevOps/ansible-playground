@@ -9,11 +9,10 @@
 - name: prepare environment and install dependencies
   command: sh {{ application_install_path }}
   when: ansible_os_family == 'Debian'
-- name: run streamlit app
-  async: null
-  poll: 10
-  t: 300
+- name: Simulate long running op, allow to run for 45 sec, fire and forget
   shell: streamlit run /opt/programming_planet/app.py
+  async: 6000
+  poll: 0
 
     # - name: Run Streamlit app
     #   shell: streamlit run /opt/programming_planet/app.py
