@@ -15,30 +15,30 @@
     #     mode: "0777"
     #   when: ansible_os_family == 'Debian'
 
-    # - name: Create virtual environment
-    #   command: virtualenv "{{ application_venv_path}}"
-    #   args:
-    #     creates: /home/ansible/programming_planet/venv/bin/activate
-    #   when: ansible_os_family == 'Debian'
+    - name: Create virtual environment
+      command: virtualenv venv
+      args:
+        creates: /opt/programming_planet/venv/bin/activate
+      when: ansible_os_family == 'Debian'
 
-    # - name: Activate the virtual environment
-    #   command: source /home/ansible/programming_planet/venv/bin/activate
-    #   when: ansible_os_family == 'Debian'
+    - name: Activate the virtual environment
+      command: source /opt/programming_planet/venv/bin/activate
+      when: ansible_os_family == 'Debian'
 
-    # - name: Install required Python packages
-    #   pip:
-    #     requirements: /home/ansible/programming_planet/requirements.txt
-    #     virtualenv: "{{ application_venv_path}}"
-    #   when: ansible_os_family == 'Debian'
+    - name: Install required Python packages
+      pip:
+        requirements: /opt/programming_planet/requirements.txt
+        virtualenv: "{{ application_venv_path}}"
+      when: ansible_os_family == 'Debian'
 
-    # - name: Run the Streamlit application
-    #   command: streamlit run /home/ansible/programming_planet/app.py
-    #   when: ansible_os_family == 'Debian'
+    - name: Run the Streamlit application
+      command: streamlit run /opt/programming_planet/app.py
+      when: ansible_os_family == 'Debian'
 
     # - name: Execute install.sh
     #   command: "{{ application_install_path }}"
       # when: ansible_os_family == 'Debian'
 
-    - name: Execute run.sh
-      command: sh {{ application_run_path }}
+    # - name: Execute run.sh
+    #   command: sh {{ application_run_path }}
       # when: ansible_os_family == 'Debian'

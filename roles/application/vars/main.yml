@@ -1,5 +1,4 @@
 ---
 # vars file for application
 application_path: /opt/programming_planet
-application_venv_path: venv
 application_run_path: /opt/programming_planet/run.sh
