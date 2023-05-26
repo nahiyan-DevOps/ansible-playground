@@ -13,6 +13,7 @@
   shell:
     cmd:  |
       cd /opt/programming_planet
+      kill $(lsof -t -i :8501)
       nohup streamlit run app.py > /dev/null 2>&1 &
 # - name: Run application
 #   shell: 
