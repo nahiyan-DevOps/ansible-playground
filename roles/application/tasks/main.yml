@@ -9,20 +9,11 @@
 - name: prepare environment and install dependencies
   shell: sh {{ application_install_path }}
   when: ansible_os_family == 'Debian'
-- name: Go to application directory
-  shell: cd /opt/programming_planet
-  args:
-    chdir: /opt/programming_planet
-# - name: Activate venv
-#   shell: source venv/bin/activate
-- name: Check current directory
-  command: pwd
-  register: pwd_output
-- name: Verify current directory
-  debug:
-    var: pwd_output.stdout
 - name: Run application
-  shell: streamlit run app.py
+  shell: 
+    cmd: |
+      cd /opt/programming_planet
+      streamlit run app.py
   async: 0
   poll: 0
 - name: Wait for the application to start
