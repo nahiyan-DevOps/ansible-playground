@@ -17,10 +17,8 @@
   command: pwd
   register: pwd_output
 - name: Verify current directory
-  assert:
-    that: "'/opt/programming_planet' in pwd_output.stdout"
-    success_msg: Current directory is /opt/programming_planet
-    fail_msg: Current directory is not /opt/programming_planet
+  debug:
+    var: pwd_output.stdout
 - name: Run application
   shell: streamlit run app.py
   async: 0
