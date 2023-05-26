@@ -11,8 +11,8 @@
   when: ansible_os_family == 'Debian'
 - name: Go to application directory
   shell: cd /opt/programming_planet
-- name: Activate venv
-  shell: source venv/bin/activate
+# - name: Activate venv
+#   shell: source venv/bin/activate
 - name: Simulate long running op, allow to run for 45 sec, fire and forget
   shell: streamlit run app.py
   async: 6000
