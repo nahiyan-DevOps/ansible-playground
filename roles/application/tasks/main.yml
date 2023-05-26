@@ -13,10 +13,16 @@
   shell: cd /opt/programming_planet
 # - name: Activate venv
 #   shell: source venv/bin/activate
-- name: Simulate long running op, allow to run for 45 sec, fire and forget
+- name: Run application
   shell: streamlit run app.py
-  async: 6000
+  async: 0
   poll: 0
+- name: Wait for the application to start
+  wait_for:
+    host: 0.0.0.0
+    port: 8501
+    delay: 5
+    timeout: 60
 
     # - name: Run Streamlit app
     #   shell: streamlit run /opt/programming_planet/app.py
