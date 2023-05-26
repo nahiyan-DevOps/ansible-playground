@@ -32,17 +32,16 @@
     state: started
 
 - name: Copy dump file
-  copy:
-    src: app_db_about.sql
+  template:
+    src: app_db_about.sql.j2
     dest: /tmp/dump.sql
 
 - name: Configure Database
   shell: sudo mysql -e "source /tmp/dump.sql"
 
-# - name: Copy mysql config
-#   copy:
-#     src: mysqld.cnf
-#     dest: /etc/mysql/mysql.conf.d/mysqld.cnf
-#   notify:
-#     - Restart MySQL
-#   tags: Copy mysql config
+- name: Copy mysql config
+  template:
+    src: mysqld.cnf.j2
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+  notify:
+    - Restart MySQL

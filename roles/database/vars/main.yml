@@ -1,5 +1,8 @@
 ---
 # vars file for database
-    mysql_package:
-      - mysql-server
-      - mysql-client
+mysql_port: 3306
+dbname: app_db
+table_name: about
+user: app_db
+pass: 1234
+bind: 0.0.0.0
