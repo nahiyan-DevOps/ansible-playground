@@ -1,10 +1,10 @@
 ---
-# - name: Install and configure mysql database on Ubuntu
-#   hosts: dbserver
-#   become: true
+- name: Install and configure mysql database on Ubuntu
+  hosts: dbserver
+  become: true
 
-#   roles:
-#     - database
+  roles:
+    - database
 
 - name: Install and configure python application Ubuntu
   hosts: appserver
@@ -13,5 +13,4 @@
   roles:
     - git
     - nginx
-    # - python
     - application
