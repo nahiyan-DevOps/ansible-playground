@@ -14,7 +14,7 @@
     cmd: |
       cd /opt/programming_planet
       streamlit run app.py
-  async: 0
+  async: 60
   poll: 0
 - name: Wait for the application to start
   wait_for:
