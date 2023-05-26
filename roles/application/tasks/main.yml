@@ -12,7 +12,6 @@
 - name: Run Application
   shell:
     cmd:  |
-      pkill -f "streamlit run app.py"
       cd /opt/programming_planet
       nohup streamlit run app.py > /dev/null 2>&1 &
 # - name: Run application
