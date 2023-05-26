@@ -10,12 +10,17 @@
   command: sh {{ application_install_path }}
   when: ansible_os_family == 'Debian'
 - name: Go to application directory
-  shell: cd /opt/programming_planet
+  command: cd /opt/programming_planet
 # - name: Activate venv
 #   shell: source venv/bin/activate
-- name: Print current directory
-  debug:
-    var: ansible_env.PWD
+- name: Check current directory
+  command: pwd
+  register: pwd_output
+- name: Verify current directory
+  assert:
+    that: "'/opt/programming_planet' in pwd_output.stdout"
+    success_msg: Current directory is /opt/programming_planet
+    fail_msg: Current directory is not /opt/programming_planet
 - name: Run application
   shell: streamlit run app.py
   async: 0
