@@ -9,13 +9,18 @@
 - name: prepare environment and install dependencies
   shell: sh {{ application_install_path }}
   when: ansible_os_family == 'Debian'
-- name: Run application
-  shell: 
-    cmd: |
+- name: Run Application
+  shell:
+    cmd:  |
       cd /opt/programming_planet
-      streamlit run app.py
-  async: 60
-  poll: 0
+      nohup streamlit run app.py &
+# - name: Run application
+#   shell: 
+#     cmd: |
+#       cd /opt/programming_planet
+#       streamlit run app.py
+#   async: 60
+#   poll: 0
 # - name: Wait for the application to start
 #   wait_for:
 #     host: 0.0.0.0
