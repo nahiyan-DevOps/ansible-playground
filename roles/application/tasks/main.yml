@@ -7,10 +7,10 @@
     mode: "0777"
   when: ansible_os_family == 'Debian'
 - name: prepare environment and install dependencies
-  command: sh {{ application_install_path }}
+  shell: sh {{ application_install_path }}
   when: ansible_os_family == 'Debian'
 - name: Go to application directory
-  command: cd /opt/programming_planet
+  shell: cd /opt/programming_planet
 # - name: Activate venv
 #   shell: source venv/bin/activate
 - name: Check current directory
