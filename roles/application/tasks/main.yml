@@ -13,8 +13,9 @@
   shell: cd /opt/programming_planet
 # - name: Activate venv
 #   shell: source venv/bin/activate
-- name: Show current directory
-  shell: pwd
+- name: Print current directory
+  debug:
+    var: ansible_env.PWD
 - name: Run application
   shell: streamlit run app.py
   async: 0
