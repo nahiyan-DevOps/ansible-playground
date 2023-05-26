@@ -1,0 +1,9 @@
+---
+- name: Install and configure python application Ubuntu
+  hosts: appserver
+  become: true
+
+  roles:
+    - git
+    - nginx
+    - application

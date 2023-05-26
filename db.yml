@@ -1,0 +1,7 @@
+---
+- name: Install and configure mysql database on Ubuntu
+  hosts: dbserver
+  become: true
+  
+  roles:
+    - database
